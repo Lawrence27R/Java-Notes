@@ -1,0 +1,30 @@
+Core Java
+https://claude.ai/share/cc9239b0-6989-40f3-8073-359dcbe06bc4
+
+Core Java Continue
+https://chatgpt.com/share/69d3c0f7-10f0-8324-a8b3-48e84529af0c
+
+Java OOPS
+https://claude.ai/share/a2f673dd-a576-4190-9d00-a3982ded60a7
+
+Java Collection FrameWork
+https://chatgpt.com/share/6a1abfbc-81dc-8323-a525-0a0e927fe3fb
+
+Docker and Kubernetes
+https://claude.ai/share/ee8789da-02e2-4c5a-8fb3-b12628b2fd8b
+
+Design Patterns in Java
+https://claude.ai/share/3f2e1465-39b1-45f9-aeb9-0d311b539317
+
+Spring and Spring Boot
+https://chatgpt.com/share/6a1ac09b-542c-8321-9a7a-e81ca735241a
+
+Java Array Coding Questions
+https://gemini.google.com/share/2a6bfc4ef179
+
+MicroService and Kafka and Redis
+https://chatgpt.com/share/6a1c63ad-bdf0-8323-98f9-d08f57fdf928
+
+AWS and Openshift and Git/GitHub
+https://chatgpt.com/share/6a1c63fd-715c-8323-83d1-bd161532c081
+
