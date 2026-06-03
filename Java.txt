@@ -28,3 +28,6 @@ https://chatgpt.com/share/6a1c63ad-bdf0-8323-98f9-d08f57fdf928
 AWS and Openshift and Git/GitHub
 https://chatgpt.com/share/6a1c63fd-715c-8323-83d1-bd161532c081
 
+Angular N React
+https://chatgpt.com/share/6a1fb10c-4474-83a6-91ba-e8239ea587f1
+
