@@ -31,3 +31,6 @@ https://chatgpt.com/share/6a1c63fd-715c-8323-83d1-bd161532c081
 Angular N React
 https://chatgpt.com/share/6a1fb10c-4474-83a6-91ba-e8239ea587f1
 
+SQL Postgres N MongoDB
+https://chatgpt.com/share/6a23b2b0-6e30-8322-9f78-790134a267cd
+
