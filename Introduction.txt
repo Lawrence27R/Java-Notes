@@ -1,0 +1,28 @@
+Introduction:
+
+Good morning . My name is Lawrence Rodriques. I am currently working as a Software Developer at Aurionpro Solutions, Navi Mumbai, and I have over 2 years of experience in software development.
+
+In Aurionpro I have primarily work on enterprise banking applications using Java, Spring Boot, Microservices, PostgreSQL, and Angular. My experience includes designing and developing REST APIs, handling production issues, implementing business requirements, and collaborating with cross-functional teams.
+
+At Aurionpro, I have worked on Transaction Banking projects for clients such as STC Bank and SAIB Bank, mainly in Payments and Trade Finance domains. My responsibilities include backend development, API integration, production support, requirement analysis, and participating in design discussions.
+
+I completed my B.E. in Computer Engineering with Honors in Cyber Security from Fr. C. Rodrigues Institute of Technology with a GPA of 9.13.
+
+I am passionate about building scalable applications, learning new technologies, and solving complex technical problems. I am now looking for an opportunity where I can contribute and continue growing as a software developer.
+
+Tell Me About Your Project at Aurionpro
+Project: Corporate & Transaction Banking Platform
+
+Client: STC Bank / SAIB Bank
+
+Domain: Banking, Payments & Trade Finance
+
+Tech Stack: Java, Spring Boot, Microservices, PostgreSQL, Angular, Kafka, REST APIs, Docker
+
+Project Overview
+
+"At Aurionpro, I work on a Corporate and Transaction Banking platform used by corporate customers to perform payment transactions and manage trade finance operations.
+
+The application follows a Microservices architecture where each service handles a specific business function such as Payments, User Management, Authentication, Trade Finance, Notifications, and Reporting.
+
+The system allows corporate users to create payment requests, authorize transactions, track transaction status, and generate reports while ensuring compliance with banking security standards."
