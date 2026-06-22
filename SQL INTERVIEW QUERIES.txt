@@ -1,0 +1,272 @@
+SQL INTERVIEW QUERIES
+
+1. Find the 2nd Highest Salary
+
+SELECT MAX(salary)
+FROM employee
+WHERE salary < (SELECT MAX(salary) FROM employee);
+
+---
+
+2. Find the Nth Highest Salary
+
+SELECT salary
+FROM (
+SELECT salary,
+DENSE_RANK() OVER (ORDER BY salary DESC) rank_no
+FROM employee
+)
+WHERE rank_no = N;
+
+---
+
+3. Find Top 3 Highest Salaries
+
+SELECT *
+FROM (
+SELECT *,
+DENSE_RANK() OVER (ORDER BY salary DESC) rank_no
+FROM employee
+)
+WHERE rank_no <= 3;
+
+---
+
+4. Find Duplicate Records
+
+SELECT id, COUNT(*)
+FROM employee
+GROUP BY id
+HAVING COUNT(*) > 1;
+
+---
+
+5. Delete Duplicate Records
+
+DELETE FROM employee
+WHERE rowid NOT IN (
+SELECT MIN(rowid)
+FROM employee
+GROUP BY id
+);
+
+---
+
+6. Find Employees With Same Salary
+
+SELECT e1.name, e2.name, e1.salary
+FROM employee e1
+JOIN employee e2
+ON e1.salary = e2.salary
+AND e1.id <> e2.id;
+
+---
+
+7. Find Employees Earning More Than Average Salary
+
+SELECT *
+FROM employee
+WHERE salary >
+(
+SELECT AVG(salary)
+FROM employee
+);
+
+---
+
+8. Find Maximum Salary Department Wise
+
+SELECT department,
+MAX(salary)
+FROM employee
+GROUP BY department;
+
+---
+
+9. Find Count Of Employees Department Wise
+
+SELECT department,
+COUNT(*)
+FROM employee
+GROUP BY department;
+
+---
+
+10. Find Employees Whose Name Starts With A
+
+SELECT *
+FROM employee
+WHERE name LIKE 'A%';
+
+---
+
+11. Find Employees Whose Name Ends With N
+
+SELECT *
+FROM employee
+WHERE name LIKE '%N';
+
+---
+
+12. Find Employees Joined In Current Month
+
+SELECT *
+FROM employee
+WHERE EXTRACT(MONTH FROM joining_date)
+= EXTRACT(MONTH FROM CURRENT_DATE);
+
+---
+
+13. Find Total Salary Department Wise
+
+SELECT department,
+SUM(salary)
+FROM employee
+GROUP BY department;
+
+---
+
+14. INNER JOIN
+
+SELECT *
+FROM employee e
+INNER JOIN department d
+ON e.dept_id = d.id;
+
+---
+
+15. LEFT JOIN
+
+SELECT *
+FROM employee e
+LEFT JOIN department d
+ON e.dept_id = d.id;
+
+---
+
+16. Employees Without Department
+
+SELECT *
+FROM employee e
+LEFT JOIN department d
+ON e.dept_id = d.id
+WHERE d.id IS NULL;
+
+---
+
+17. Find Highest Salary In Each Department
+
+SELECT *
+FROM (
+SELECT e.*,
+ROW_NUMBER() OVER
+(
+PARTITION BY department
+ORDER BY salary DESC
+) rn
+FROM employee e
+)
+WHERE rn = 1;
+
+---
+
+18. Difference Between WHERE and HAVING
+
+WHERE -> Filters rows before GROUP BY
+
+HAVING -> Filters groups after GROUP BY
+
+---
+
+19. DELETE vs TRUNCATE vs DROP
+
+DELETE:
+
+* Removes rows
+* Can rollback
+
+TRUNCATE:
+
+* Removes all rows
+* Faster
+* Cannot rollback (DB dependent)
+
+DROP:
+
+* Removes table structure and data
+
+---
+
+20. Find Employees Not Present In Another Table
+
+SELECT *
+FROM employee e
+WHERE NOT EXISTS
+(
+SELECT 1
+FROM resigned_employee r
+WHERE r.id = e.id
+);
+
+---
+
+21. Fetch Alternate Records
+
+SELECT *
+FROM (
+SELECT e.*,
+ROW_NUMBER() OVER (ORDER BY id) rn
+FROM employee e
+)
+WHERE MOD(rn,2)=1;
+
+---
+
+22. Find Last Record
+
+SELECT *
+FROM employee
+ORDER BY id DESC
+FETCH FIRST 1 ROW ONLY;
+
+---
+
+23. Find Common Records Between Two Tables
+
+SELECT *
+FROM employee_2024
+INTERSECT
+SELECT *
+FROM employee_2025;
+
+---
+
+24. Find Records Present In One Table But Not Another
+
+SELECT *
+FROM employee_2024
+MINUS
+SELECT *
+FROM employee_2025;
+
+---
+
+25. Find 3rd Highest Salary Department Wise
+
+SELECT *
+FROM (
+SELECT e.*,
+DENSE_RANK() OVER
+(
+PARTITION BY department
+ORDER BY salary DESC
+) rank_no
+FROM employee e
+)
+WHERE rank_no = 3;
+
+Find 3rd Highest Salary using LIMIT and OFFSET
+SELECT salary
+FROM employee
+ORDER BY salary DESC
+LIMIT 1 OFFSET 2;

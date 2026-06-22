@@ -1,0 +1,722 @@
+**What is a base Class:**
+
+A base class is a class whose properties and methods are inherited by another class.
+
+It is also commonly called a superclass or parent class.
+
+class Animal { --parent
+
+&#x20;   void eat() {
+
+&#x20;       System.out.println("This animal eats food.");
+
+&#x20;   }
+
+}
+
+class Dog extends Animal { --child
+
+&#x20;   void bark() {
+
+&#x20;       System.out.println("The dog barks.");
+
+&#x20;   }
+
+}
+
+A base class allows you to:
+
+Reuse common code.
+
+Avoid duplication.
+
+Create a hierarchy of related classes.
+
+Support polymorphism.
+
+
+
+**Which is parent class of all classes in java and how many methods does it has:**
+
+The parent class of all classes in Java is: Object
+
+Every class in Java directly or indirectly extends Object.
+
+The Object class provides 11 methods (some overloaded):
+
+Why is Object class parent of all classes?
+
+Because Java needs common methods (equals, hashCode, toString, etc.) available to every object.
+
+
+
+**What is singleton how to make class singleton:**
+
+A Singleton is a design pattern that ensures only one object of a class is created throughout the application and provides a global access point to that object.
+
+Why do we need Singleton?
+
+
+
+Some resources should have only one instance:
+
+Database Connection
+
+Logger
+
+Configuration Manager
+
+Cache Manager
+
+
+
+**How to Make a Class Singleton**
+
+Step 1: Make constructor private
+
+Prevent external object creation.
+
+Step 2: Create a static instance
+
+Store the only object.
+
+Step 3: Provide a public method to access it
+
+class Singleton {
+
+
+
+&#x20;   private static Singleton instance = new Singleton();
+
+
+
+&#x20;   private Singleton() {
+
+&#x20;   }
+
+
+
+&#x20;   public static Singleton getInstance() {
+
+&#x20;       return instance;
+
+&#x20;   }
+
+}
+
+
+
+**What is mutable and immutable class in java how to make class immutable:**
+
+**Mutable Class**
+
+A mutable class is a class whose object's state can be changed after creation.
+
+Using setters we can set the values
+
+
+
+**Immutable Class**
+
+An immutable class is a class whose object's state cannot be changed after it is created.
+
+String str = "Hello";
+
+str.concat(" World");
+
+System.out.println(str); --Hello
+
+Benefits
+
+✅ Thread-safe
+
+✅ Secure
+
+✅ Easy caching
+
+✅ No synchronization required
+
+✅ Safe to share between multiple threads
+
+**How to Make a Class Immutable:**
+
+1\. Make the class final
+
+Prevents inheritance.
+
+public final class Employee {
+
+}
+
+2\. Make all fields private and final
+
+private final String name;
+
+private final int id;
+
+3\. Initialize fields through constructor
+
+public Employee(int id, String name) {
+
+&#x20;   this.id = id;
+
+&#x20;   this.name = name;
+
+}
+
+4\. Do not provide setters only getters
+
+public void setName(String name) {
+
+}
+
+
+
+**Java 8 Features:**
+
+1\. Lambda Expressions
+
+Runnable r = () -> System.out.println("Hello");
+
+Less boilerplate code
+
+More readable
+
+2\. Functional Interfaces
+
+An interface having exactly one abstract method.
+
+3\. Stream API
+
+Used to process collections efficiently.
+
+4\. Method References - used in streams
+
+Short form of lambda expressions.
+
+5\. Default Methods in Interface
+
+Adding a method to an interface broke all implementations.
+
+interface Vehicle {
+
+&#x20;   default void start() {
+
+&#x20;       System.out.println("Vehicle Started");
+
+&#x20;   }
+
+}
+
+6\. Static Methods in Interface
+
+7\. Optional Class
+
+Used to avoid NullPointerException.
+
+8\. Date and Time API
+
+11\. Parallel Streams
+
+Process data using multiple CPU cores.
+
+
+
+**HashMap**
+
+HashMap stores data in key-value pairs.
+
+HashMap is NOT thread-safe.
+
+Two threads updating simultaneously can cause:
+
+Data inconsistency
+
+Lost updates
+
+
+
+**ConcurrentHashMap is a thread-safe version of HashMap.**
+
+ConcurrentHashMap<Integer, String> map =
+
+&#x20;       new ConcurrentHashMap<>();
+
+Used in multithreaded applications.
+
+Used Segment Locking.
+
+Only the segment being modified was locked.
+
+Better than locking the whole map.
+
+Does NOT allow null. value and key
+
+To avoid ambiguity in concurrent environments.
+
+Slightly slower because of synchronization mechanisms.
+
+
+
+**== and equals():**
+
+For primitive types, == compares values.
+
+int a = 10;
+
+int b = 10;
+
+System.out.println(a == b); // true
+
+For objects, == compares references (memory addresses).
+
+String s1 = new String("Java");
+
+String s2 = new String("Java");
+
+System.out.println(s1 == s2); // false
+
+
+
+equals() compares the contents (logical equality) of objects.
+
+
+
+**Why is String immutable in Java?**
+
+Immutable means once a String object is created, its value cannot be changed.
+
+String s = "Hello";
+
+s.concat(" World");
+
+System.out.println(s);
+
+concat() creates a new string; it does not modify the existing one.
+
+1\. Security
+
+Strings are widely used for sensitive information:
+
+Database URLs
+
+Usernames/passwords
+
+File paths
+
+2\. String Pool Optimization
+
+Java maintains a String Pool to save memory.
+
+3\. Thread Safety
+
+Immutable objects are naturally thread-safe.
+
+Multiple threads can read msg simultaneously without synchronization because nobody can modify it.
+
+
+
+| Feature     | String            | StringBuilder | StringBuffer           |
+
+| ----------- | ----------------- | ------------- | ---------------------- |
+
+| Mutability  | ❌ Immutable       | ✅ Mutable     | ✅ Mutable              |
+
+| Thread-safe | ✅ Yes             | ❌ No          | ✅ Yes                  |
+
+| Performance | Slow (new object) | Fast 🚀       | Slower (sync overhead) |
+
+| Memory      | More usage        | Efficient     | Efficient              |
+
+| Introduced  | Java 1.0          | Java 5        | Java 1.0               |
+
+
+
+**Java 8 Features explain in one sentence why how it created**
+
+**1. Lambda Expressions**
+
+**2. Functional Interfaces**
+
+**3. Stream API**
+
+**4. Method References**
+
+**5. Optional Class**
+
+**6. New Date API**
+
+**Java 11**
+
+**var keyword**
+
+**String methods**
+
+**HttpClient**
+
+**Java 17**
+
+**1. Sealed Classes**
+
+**2. Pattern Matching for instanceof**
+
+**3. Records**
+
+**Java 21**
+
+**1. Virtual Threads**
+
+
+
+**Java 8**
+
+1\. Lambda Expressions (->)
+
+Why created: To reduce boilerplate code and enable functional programming by writing anonymous functions in a concise way.
+
+list.forEach(name -> System.out.println(name));
+
+2\. Functional Interfaces
+
+A functional interface is an interface that contains exactly one abstract method.
+
+Why created: To support lambda expressions by providing interfaces with exactly one abstract method.
+
+Because a lambda expression represents a single behavior (single method implementation).
+
+If there are two methods compiler doesn't know which method to implement for particular lambda expression
+
+c = (a,b) -> a+b;
+
+method add(int a, int b)
+
+For this shortcut to work, Java needs an interface with only one abstract method.
+
+It may also contain:
+
+default methods
+
+static methods
+
+methods inherited from Object
+
+@FunctionalInterface
+
+interface Calculator {
+
+&#x20;   int add(int a, int b);
+
+}
+
+3\. Stream API
+
+Why created: To process collections declaratively and efficiently without writing complex loops.
+
+4\. Method References (::)
+
+Why created: To make lambda expressions shorter when an existing method can be reused directly.
+
+5\. Optional Class
+
+Why created: To reduce NullPointerException and explicitly represent the presence or absence of a value.
+
+Optional is a container object introduced in Java 8 that may or may not contain a value.
+
+It is used to avoid NullPointerException and make null handling more explicit.
+
+String name = null;
+
+System.out.println(name.length()); // NullPointerException
+
+If name is null, the program crashes.
+
+Optional<String> name = Optional.ofNullable(null);
+
+System.out.println(name.isPresent()); // false
+
+Optional<String> name = Optional.of("John");
+
+It shifts the responsibility of handling empty values to the developer by forcing them to safely check and unwrap the container
+
+6\. New Date \& Time API (java.time)
+
+Why created: To replace the old Date and Calendar APIs, which were mutable, confusing, and not thread-safe.
+
+**Java 11**
+
+1\. var (Local Variable Type Inference)
+
+Why created: To reduce repetitive type declarations while keeping code readable.
+
+3\. HttpClient API
+
+Why created: To provide a modern, built-in HTTP client replacing the older HttpURLConnection.
+
+**Java 17**
+
+1\. Sealed Classes
+
+Why created: To control which classes can inherit from a parent class, improving security and maintainability.
+
+public sealed class Vehicle
+
+&#x20;   permits Car, Bike { }
+
+2\. Pattern Matching for instanceof
+
+Why created: To eliminate explicit casting after type checks.
+
+if (obj instanceof String s) {
+
+&#x20;   System.out.println(s.length());
+
+}
+
+3\. Records
+
+Why created: To reduce boilerplate code for immutable data-carrying classes.
+
+record Employee(int id, String name) {}
+
+Automatically generates:
+
+Constructor
+
+Getters
+
+toString()
+
+equals()
+
+hashCode()
+
+**Java 21**
+
+1\. Virtual Threads
+
+Why created: To support millions of lightweight concurrent tasks without creating expensive OS threads.
+
+Traditional platform threads consume significant memory and resources; virtual threads make high-concurrency applications much more scalable.
+
+
+
+**Difference between Comparable and Comparator**
+
+Both are used for sorting objects.
+
+
+
+Comparable	Comparator
+
+Present in java.lang	Present in java.util
+
+Uses compareTo()	Uses compare()
+
+Defines natural sorting	Defines custom sorting
+
+Class itself modified	Separate class/lambda used
+
+Comparable
+
+class Employee implements Comparable<Employee> {
+
+&#x20;   int id;
+
+
+
+&#x20;   public int compareTo(Employee e) {
+
+&#x20;       return this.id - e.id;
+
+&#x20;   }
+
+}
+
+Collections.sort(list);
+
+Comparator
+
+Comparator<Employee> byName =
+
+&#x20;   (e1, e2) -> e1.name.compareTo(e2.name);
+
+Comparable provides a single natural ordering using compareTo(), whereas Comparator provides multiple custom orderings using compare().
+
+
+
+**Marker Interface**
+
+A marker interface is an interface with no methods and no fields.
+
+It simply provides metadata to the JVM/framework.
+
+Serializable
+
+Cloneable
+
+
+
+**Shallow Copy vs Deep Copy**
+
+Shallow copy creates a new object, but nested objects are shared. child are same of both object if one change value it reflect in other also.
+
+Deep copy creates a new object and also creates copies of all nested objects. create new child object also.
+
+
+
+**Stream API (map, filter, flatMap)**
+
+Filters data based on conditions.
+
+map() Transforms data n\*2
+
+flatMap() -> flattens nested structures (list of list)
+
+
+
+**Explain parallel stream in java**
+
+Parallel Stream splits data processing across multiple threads to improve performance on large datasets.
+
+Faster for large datasets
+
+Uses multiple CPU cores
+
+
+
+explain equals and hashcode
+
+Generates an integer hash value.
+
+Then uses equals to confirm match.
+
+
+
+**ArrayList vs LinkedList**
+
+| ArrayList                | LinkedList               |
+
+| ------------------------ | ------------------------ |
+
+| Dynamic Array            | Doubly Linked List       |
+
+| Fast random access       | Slow random access       |
+
+| Slow insertion in middle | Fast insertion in middle |
+
+| Less memory              | More memory              |
+
+Use ArrayList when reads are frequent; use LinkedList when insertions and deletions are frequent.
+
+
+
+**Abstract Class vs Interface**
+
+| Abstract Class              | Interface                |
+
+| --------------------------- | ------------------------ |
+
+| Can have constructors       | Cannot have constructors |
+
+| Can have instance variables | Only constants           |
+
+| Single inheritance          | Multiple inheritance     |
+
+| `extends`                   | `implements`             |
+
+Abstract classes provide partial implementation and state, whereas interfaces define a contract and support multiple inheritance.4
+
+
+
+**Explain N+1 query problem:**
+
+N+1 Query Problem: When one query fetches parent records and then N additional queries are executed to fetch related child records for each parent, causing unnecessary database calls and performance issues.
+
+List<Customer> customers = customerRepo.findAll(); // 1 query
+
+
+
+for(Customer c : customers){
+
+&#x20;   c.getOrders(); // N queries
+
+}
+
+1 query (Customers)
+
+\+ 100 queries (Orders)
+
+\-------------------
+
+101 queries
+
+Use Fetch Join,
+
+
+
+**What is Data Consistency?**
+
+Data Consistency means all microservices have correct and synchronized data after a business operation completes.
+
+
+
+Example
+
+Suppose you have:
+
+Order Service
+
+Payment Service
+
+Inventory Service
+
+
+
+Customer places an order.
+
+Since each microservice has its own database, we cannot use a single database transaction across all services.
+
+1\. Saga Pattern ⭐⭐⭐⭐⭐
+
+The Saga Pattern is used to maintain data consistency across multiple microservices without using distributed transactions
+
+Instead of one large transaction, a Saga breaks it into multiple local transactions.
+
+If one step fails, compensating transactions are executed to undo the previous successful steps.
+
+Each service has its own database.
+
+A single database transaction cannot span all services.
+
+Order Service
+
+&#x20;   ↓
+
+Payment Service
+
+&#x20;   ↓
+
+Inventory Service
+
+If Inventory fails:
+
+Inventory Failed
+
+&#x20;      ↓
+
+Refund Payment
+
+&#x20;      ↓
+
+Cancel Order
+
+These are called Compensating Transactions.
+
+Fegin Client
+
+It is a declarative REST client where we define an interface and Spring generates the implementation.
+
+
+
+Idempotency is a design principle where performing an operation multiple times produces the exact same system state as executing it a single time
+
