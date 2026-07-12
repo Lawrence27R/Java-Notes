@@ -576,9 +576,15 @@ Java supports only single inheritance.
 
 Runnable allows extending another class.
 
+Limitation: run() returns void and can't throw checked exceptions — no way to get a result back or propagate a failure cleanly.
+
 Method 3: Lambda
 
-Method 4: Executor Framework (Most Preferred)
+Method 4: Executor Framework (Most Preferred) - Uses Callable
+
+Return Result and throws checked exceptions
+
+It's the recommended way to manage threads rather than creating raw Thread objects yourself.
 
 ExecutorService executor =
 
@@ -598,11 +604,43 @@ This is how threads are usually managed in enterprise applications.
 
 
 
+Thread creation/destruction is expensive (OS-level). Pools reuse threads, bound resource usage, and provide lifecycle management, task queuing, and structured error handling — critical for something like a transaction banking system processing bursts of requests.
+
+It reuses a fixed set of threads instead of creating/destroying them per task, so your app stays fast and doesn't run out of resources under load.
+
+ExecutorService is a Java framework that manages a pool of reusable worker threads, so you can submit tasks to run concurrently without manually creating and destroying threads yourself.
+
+Pool size = Number of CPU cores + 1 (1 extra thread to keep it alive)
+
+
+
+
+
+execute() takes only Runnable, returns nothing, exceptions propagate to the thread's uncaught exception handler. submit() takes Runnable/Callable, returns a Future, and captures exceptions inside it.
+
+
+
+Q3: How do you decide thread pool size for a CPU-bound vs I/O-bound task?
+
+CPU-bound: roughly number of CPU cores + 1. I/O-bound (like DB/network calls, common in your iCashPro/payment gateway context): higher, since threads spend time waiting — often calculated as cores \* (1 + waitTime/computeTime).
+
+
+
+ThreadPoolExecutor
+
+Executor (interface) — just execute(Runnable)
+
+&#x20;  └── ExecutorService (interface) — adds lifecycle mgmt, submit(), Future
+
+&#x20;       └── ScheduledExecutorService — adds delayed/periodic scheduling
+
+
+
 **Thread Lifecycle:**
 
 NEW (Thread created {new keyword})
 
-
+Thread object is created, but start() hasn't been called yet. No thread exists at OS level yet — just a Java object.
 
 ↓
 
@@ -610,7 +648,11 @@ NEW (Thread created {new keyword})
 
 RUNNABLE (t.start() Thread is ready to run.)
 
+After start() is called. This is actually two sub-states combined that Java doesn't distinguish:
 
+Ready — waiting for the OS scheduler to give it CPU time
+
+Running — actually executing on a CPU core right now
 
 ↓
 
@@ -626,13 +668,31 @@ RUNNING (CPU executes the thread)
 
 WAITING / BLOCKED / TIMED\_WAITING (Waiting indefinitely Thread.sleep(1000))
 
+(BLOCKED) Thread is alive but stuck waiting to acquire a monitor lock (i.e., trying to enter a synchronized block/method that another thread already holds).
 
+(WAITING)Thread is waiting indefinitely for another thread to explicitly wake it up. It won't proceed until someone calls notify(), notifyAll(), or the joined thread finishes.
+
+Caused by:
+
+object.wait() (no timeout)
+
+thread.join() (no timeout)
+
+(TIMED\_WAITING)Same as WAITING, but with a timeout — the thread will wake up on its own after the specified time, even without being notified.
+
+Caused by:
+
+Thread.sleep(ms)
+
+object.wait(ms)
 
 ↓
 
 
 
 TERMINATED (Execution completed)
+
+The thread has finished executing — run() completed normally, or it exited due to an uncaught exception. Once terminated, it cannot be restarted
 
 
 
@@ -776,19 +836,21 @@ start()
 
 What is it?
 
-start() creates a new thread and then calls the run() method internally.
-
-run()
+Creates a new OS-level thread and calls run() on that new thread asynchronously. Returns immediately — doesn't wait for run() to finish.run()
 
 Contains the actual work performed by the thread.
 
 run() should not be called directly when you want concurrency.
+
+Just a normal method containing the code you want executed. If you call run() directly (not via start()), it executes synchronously on the current thread — no new thread is created at all.
 
 sleep()
 
 Pauses the current thread for a specified amount of time.
 
 Thread does not execute.
+
+Pauses the current thread for the given time. Does not release any locks it holds. Throws checked InterruptedException.
 
 yield()
 
@@ -798,9 +860,13 @@ yield() tells the scheduler:
 
 It is only a hint. Thread A waits Thread B may run or A may continue
 
+A hint to the scheduler that the current thread is willing to give up its CPU turn so other threads of the same priority can run. Purely advisory — the JVM/OS may ignore it entirely.
+
 join()
 
 Makes the current thread wait until another thread finishes.
+
+Makes the calling thread wait until the thread you called join() on finishes execution.
 
 wait()
 
@@ -810,17 +876,41 @@ Release the object's monitor lock.
 
 Wait until another thread calls notify() or notifyAll().
 
+Releases the lock on the object and puts the thread into WAITING (or TIMED\_WAITING with a timeout), until another thread calls notify()/notifyAll() on the same object.
+
 notify()
 
 Wakes one thread waiting on the same object's monitor.
+
+That thread moves from WAITING back to RUNNABLE — but it still needs to reacquire the lock before continuing, so it doesn't run immediately if the notifying thread still holds the lock.
 
 notifyAll() (One gets lock)
 
 Wakes all threads waiting on the object's monitor.
 
+Wakes up all threads waiting on the object's monitor. They all compete to reacquire the lock, one at a time. Generally safer than notify() — with notify(), if you accidentally wake the "wrong" waiting thread (one that still can't proceed), you get a stuck program. notifyAll() avoids this at a small performance cost.
+
 interrupt()
 
 Used to interrupt a thread.
+
+Sets the interrupt flag on a thread. Doesn't forcibly stop it — it's a cooperative signal. If the thread is in sleep(), wait(), or join(), it throws InterruptedException immediately and clears the flag. If the thread is doing normal computation, it must manually check isInterrupted() and decide to stop.
+
+
+
+Deprecated methods — stop(), suspend(), resume()
+
+
+
+Why are wait()/notify() on Object instead of Thread?
+
+Because locking is associated with any object's monitor, not specifically with a Thread — any object can be a synchronization point. Since synchronized can lock on any object, wait/notify needed to live where the lock lives: on Object.
+
+
+
+Difference between sleep() and wait()?
+
+sleep() is a static Thread method, doesn't release locks, doesn't need synchronization, wakes up after the given time. wait() is an Object method, must be called inside synchronized, releases the lock, and needs another thread to call notify()/notifyAll() (or a timeout) to wake up.
 
 
 
@@ -829,6 +919,8 @@ Used to interrupt a thread.
 A deadlock happens when two or more processes (or people) are waiting for each other, so nobody can continue.
 
 A Deadlock occurs when two or more threads wait forever for resources held by each other.
+
+A deadlock happens when two or more threads are each waiting for a lock the other one holds, so none of them can ever proceed — they're stuck forever in a circular wait.
 
 Example
 
@@ -888,7 +980,19 @@ Both wait forever.
 
 Prevent Deadlock:
 
+1\. Lock Ordering
+
+Always acquire locks in the same, fixed global order, regardless of which thread or direction the operation goes.
+
 **Acquire locks in a consistent order**
+
+**2. Lock Timeout (breaks Hold and Wait — using tryLock())**
+
+Instead of blocking forever waiting for a lock, try to acquire it with a timeout; if it fails, back off, release what you're holding, and retry.
+
+This is the standard way ReentrantLock is used to avoid deadlock — synchronized has no equivalent timeout mechanism, which is a key reason Lock exists.
+
+
 
 **Use ReentrantLock.tryLock()**
 
@@ -920,17 +1024,69 @@ If it's not available → stop trying, release any locks you already have, and t
 
 This avoids getting stuck forever.Always take locks in the same order.
 
-**Reduce nested locking**
+
+
+Does ReentrantLock prevent deadlock automatically?
+
+No — it doesn't prevent deadlock by itself; you still need to apply lock ordering or tryLock() with timeout deliberately.
+
+
+
+**3. Avoid Nested Locks**
 
 Don't hold one lock while trying to get another lock unless it's really necessary.
 
 
 
+4\. Use a Single Lock for Related Operations
 
+If two resources are frequently locked together, sometimes it's simpler to use one coarser lock covering both, instead of two fine-grained locks. Trades some concurrency for eliminating the deadlock risk entirely.
+
+
+
+**synchronized** KeywordProvides mutual exclusion (only one thread executes the block at a time) AND visibility (changes made inside are guaranteed visible to other threads after they acquire the same lock).
+
+
+
+**volatile** just guarantees that all threads always see the latest value of a variable — nothing more, nothing less
+
+
+
+**What is a Daemon Thread**
+
+A daemon thread is a low-priority, background thread that runs in service of user (non-daemon) threads. The JVM does not wait for daemon threads to finish before exiting — as soon as all non-daemon (user) threads finish, the JVM shuts down immediately, killing any daemon threads mid-execution, no matter what they were doing.
+
+Simple analogy: think of daemon threads like background music at a party. The party (JVM) doesn't wait for the music to naturally end — the moment all the guests (user threads) leave, the venue shuts down and the music just cuts off, mid-song.
+
+
+
+Ways to create - setDaemon(true) must be called before start()
+
+
+
+&#x09;			User Thread		Daemon Thread
+
+JVM waits for it to finish?	Yes			No
+
+Priority in JVM lifecycle	Keeps JVM alive		Doesn't keep JVM alive
+
+Typical use			Main application logic	Background support tasks (GC, monitoring, cleanup)
+
+Example				main() thread, worker  Garbage Collector thread, a heartbeat/logging thread
+
+&#x09;			threads doing actual
+
+&#x09;			business logic
+
+
+
+A **virtual thread** is a lightweight thread managed by the JVM itself, not the OS. Traditional threads (platform threads) map 1:1 to an OS thread — expensive to create, limited in number (thousands, maybe). Virtual threads let you spin up millions of them cheaply, because many virtual threads share a small pool of actual OS threads underneath.
 
 **Concurrent Collections**
 
 ConcurrentHashMap
 
-CopyOnWriteArrayList
+Used segment-based locking — the map was divided into 16 segments by default, each with its own lock. Two threads could write simultaneously as long as they hit different segments. Still a form of lock striping, but coarse-grained.
+
+CopyOnWriteArrayList / CopyOnWriteArraySetHow it works: every write operation (add, remove, set) creates a brand new copy of the entire underlying array, and swaps the reference. Reads always operate on a stable, unchanging snapshot — no locking needed for reads at all.
 

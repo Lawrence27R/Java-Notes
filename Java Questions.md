@@ -50,6 +50,446 @@ Because Java needs common methods (equals, hashCode, toString, etc.) available t
 
 
 
+**Java Main Method:**
+
+1\. Can static be written before public?
+
+Yes.
+
+In Java, the order of modifiers (like public, static, final, abstract, etc.) generally does not matter. The compiler treats them the same.
+
+
+
+2\. Can we change the return type (void)?
+
+Yes, but with a condition.
+
+The JVM looks specifically for this signature:
+
+the code compiles, but when you try to run the class, you'll get an error similar to:
+
+
+
+3\. Can we change the parameter?
+
+The JVM accepts:
+
+
+
+4\. Can we overload the main() method?
+
+Yes.
+
+JVM Specifically looks for public static void main(String args\[]) or String\[] args
+
+
+
+5\. Can main() be overridden?
+
+No.
+
+main() is static.
+
+Static methods belong to the class, not the object.
+
+
+
+6\. Can main() be non-static?
+
+No.
+
+no object of your class has been created yet.
+
+A static method belongs to the class, not to an instance (object), so the JVM can invoke it directly.
+
+Compilation succeeds, but running the class fails because the JVM requires a public static void main(String\[] args) method.
+
+
+
+7\. Can main() be private?
+
+It compiles, but the JVM cannot access it.
+
+Error: Main method not found in class
+
+
+
+8\. Can main() be final?
+
+Yes.
+
+
+
+9\. Can main() be synchronized?
+
+Yes.
+
+
+
+10\. Can main() throw exceptions?
+
+Yes.
+
+
+
+java.util.function
+
+filter() → Predicate
+
+forEach() → Consumer
+
+Stream.generate() → Supplier
+
+**Predicate<T>:**
+
+A Predicate is a functional interface that accepts one input and returns a boolean value.
+
+It is mainly used for filtering or testing conditions.
+
+Validate age
+
+Check email format
+
+
+
+**Consumer<T>:**
+
+A Consumer accepts one input and does not return any value.
+
+It is mainly used for performing actions such as printing, logging, saving data, or updating values.
+
+Send email
+
+Save audit logs
+
+
+
+**Supplier<T>:**
+
+A Supplier does not take any input but returns a value.
+
+It is mainly used when data needs to be generated or fetched on demand.
+
+Generate OTP
+
+Generate UUID
+
+Fetch current timestamp
+
+
+
+**Function<T, R>:**
+
+A Function accepts one input and returns one output.
+
+It is commonly used for mapping or converting one type of object into another.
+
+Returns any type
+
+
+
+**BiFunction<T, U, R>:**
+
+A BiFunction accepts two inputs and returns one output.
+
+
+
+Predicate → Checks → Returns true/false.
+
+Consumer → Consumes → Takes input, returns nothing.
+
+Supplier → Supplies → No input, returns a value.
+
+Function → Transforms → One input → One output.
+
+BiFunction → Transforms using two inputs → Two inputs → One output.
+
+
+
+**BeanFactory:**
+
+BeanFactory is the basic IoC container provided by Spring.
+
+It is responsible for:
+
+Creating beans
+
+Managing bean lifecycle
+
+Performing Dependency Injection
+
+Lightweight
+
+Suitable for simple applications
+
+
+
+**ApplicationContext:**
+
+ApplicationContext is an advanced IoC container that extends BeanFactory.
+
+Eager initialization for singleton beans by default
+
+Dependency Injection + Enterprise features
+
+Most commonly used in Spring Boot
+
+
+
+**HashSet:**
+
+A HashSet in Java is a collection that stores unique elements and does not maintain any insertion or sorting order. It is part of the Java Collections Framework and is implemented in the java.util package.
+
+Stores only unique values (no duplicates).
+
+Allows one null value.
+
+Provides fast insertion, deletion, and lookup (average O(1) time).
+
+
+
+Internal Working of HashSet
+
+Internally, HashSet is backed by a HashMap.
+
+When you create:
+
+HashSet<String> set = new HashSet<>();
+
+Java internally creates:
+
+HashMap<String, Object> map = new HashMap<>();
+
+Each element in the HashSet becomes a key in the HashMap, and all keys share the same dummy value.
+
+Key      Value
+
+\----     -----
+
+Apple -> PRESENT
+
+Banana -> PRESENT
+
+
+
+When you execute:
+
+set.add("Apple");
+
+Internally it becomes:
+
+map.put("Apple", PRESENT);
+
+
+
+Step 1: Calculate hashCode()
+
+"Apple".hashCode();
+
+Step 2: Compute Bucket Index
+
+The hash code is converted into a bucket index.
+
+Step 4: Check for Duplicate
+
+If bucket 5 already contains data:
+
+Java checks -> equals()
+
+returns true, insertion is rejected.
+
+Otherwise it stores the new element.
+
+
+
+**HashMap:**
+
+**Default Size of HashMap/HashSet is 16, loadfactor is 0.75, Threshold = 16 × 0.75 = 12**
+
+When the 13th entry is added, the capacity doubles from 16 to 32.
+
+A HashMap is a data structure that stores data as key-value pairs. It provides average O(1) time complexity for put(), get(), and remove() operations by using hashing.
+
+A HashMap stores these entries in an array of buckets.
+
+Each bucket contains a Node.
+
+
+
+Step 1: Calculate hashCode()
+
+Step 3: Calculate Bucket Index
+
+The bucket index is computed as:
+
+Step 4: Check the Bucket
+
+If bucket 5 is empty:
+
+For getting the value it finds bucket and compare the value using equals()
+
+
+
+Reading: ✅ ArrayList (O(1)) (For Insertion All elements shift one position O(n))
+
+Insertion at beginning: ✅ LinkedList (O(1))
+
+Deletion at beginning: ✅ LinkedList (O(1))
+
+In real-world Java applications, ArrayList is often preferred over LinkedList for insertions after a certain size because of CPU cache locality and memory overhead
+
+LinkedList insertion at the middle is O(n)
+
+
+
+**Garbage Collector:**
+
+Garbage Collector (GC) is an automatic memory management system that frees memory by removing objects that are no longer being used. This helps prevent memory leaks and eliminates the need for programmers to manually deallocate memory.
+
+Garbage Collector Finds Unused Objects
+
+The JVM periodically runs the Garbage Collector.
+
+After removing unreachable objects, the memory becomes available for new objects.
+
+1\. Nullifying the Reference
+
+2\. Reassigning Reference
+
+4\. Local Variable Goes Out of Scope
+
+
+
+**Heap Memory and String Constant Pool (SCP):**
+
+What is an Object? -> Whenever you write:
+
+Student s = new Student();
+
+Java creates an object in Heap Memory.
+
+s is a reference variable stored in the stack.
+
+The actual object is stored in the heap.
+
+The Garbage Collector (GC) removes heap objects that are no longer referenced.
+
+
+
+Strings are used very frequently.
+
+String s1 = "Java";
+
+String s2 = "Java";
+
+String s3 = "Java";
+
+If Java created three separate "Java" objects, it would waste memory.
+
+**The String Constant Pool is a special area inside the heap that stores string literals.**
+
+When Java sees a string literal, it first checks:
+
+"Does this string already exist in the pool?"
+
+Yes → Reuse it.
+
+No → Create it.
+
+
+
+String s1 = "Hello";
+
+String s2 = "Hello";
+
+Line 1
+
+"Hello" is not in the pool.
+
+Java creates it.
+
+Java checks the pool.
+
+"Hello" already exists.
+
+No new object is created.
+
+Only 1 object.
+
+
+
+String s1 = new String("Hello");
+
+Java sees the literal.
+
+Creates "Hello" in the String Pool.
+
+Because of new, Java creates another object in the heap.
+
+Total Objects
+
+Pool → 1
+
+Heap → 1
+
+Total = 2
+
+
+
+String s1 = "Java";
+
+String s2 = "Java";
+
+
+
+System.out.println(s1 == s2); //true
+
+Because both point to the same pooled object.
+
+
+
+String s1 = new String("Java");
+
+String s2 = new String("Java");
+
+
+
+System.out.println(s1 == s2); //false
+
+
+
+intern() -> only points to SCP if object exist instead of heap
+
+String s1 = new String("Java");
+
+String s2 = s1.intern();
+
+s2 points to the pooled "Java". //points to SCP
+
+
+
+String s1 = "HELLO";
+
+String s3 = "hello".toUpperCase();
+
+S1 Creates one object in the String Pool.
+
+S2 "hello" -> Java creates another pooled string.
+
+Since String is immutable, Java cannot modify "hello".
+
+Instead, it creates a new String object in the heap containing "HELLO".
+
+Because methods like toUpperCase(), concat(), replace(), etc., create a new String object
+
+
+
+**REST:**
+
+Stateless API gives response in json,xml,html,binary format
+
+
+
 **What is singleton how to make class singleton:**
 
 A Singleton is a design pattern that ensures only one object of a class is created throughout the application and provides a global access point to that object.
@@ -719,4 +1159,6 @@ It is a declarative REST client where we define an interface and Spring generate
 
 
 Idempotency is a design principle where performing an operation multiple times produces the exact same system state as executing it a single time
+
+
 
