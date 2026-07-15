@@ -206,6 +206,40 @@ BiFunction → Transforms using two inputs → Two inputs → One output.
 
 
 
+**We want to use an Employee object as a key in a HashMap. Which methods should we override and why?**	
+
+A HashMap uses these methods internally:
+
+hashCode()
+
+Determines which bucket the key should be stored in.
+
+If two objects represent the same employee, they must return the same hash code.
+
+equals()
+
+Used to compare keys within the same bucket.
+
+Determines whether two keys are actually equal.
+
+
+
+If we return 1 in hashcode():
+
+This means every Employee object has the same hash code.
+
+
+
+Is e2.equals(e1)?  -> false
+
+Is e2.equals(e2)?  -> true
+
+So it still works, provided equals() is implemented correctly.
+
+Worst case O(n)
+
+
+
 **BeanFactory:**
 
 BeanFactory is the basic IoC container provided by Spring.
@@ -1159,6 +1193,4 @@ It is a declarative REST client where we define an interface and Spring generate
 
 
 Idempotency is a design principle where performing an operation multiple times produces the exact same system state as executing it a single time
-
-
 

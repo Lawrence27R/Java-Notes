@@ -578,7 +578,7 @@ Runnable allows extending another class.
 
 Limitation: run() returns void and can't throw checked exceptions — no way to get a result back or propagate a failure cleanly.
 
-Method 3: Lambda
+Method 3: Lambda -uses runnable method internally
 
 Method 4: Executor Framework (Most Preferred) - Uses Callable
 
@@ -696,7 +696,7 @@ The thread has finished executing — run() completed normally, or it exited due
 
 
 
-t.start() - create a new thread
+t.start() - create a new thread at the OS level
 
 t.run() - Runs like a normal method. No new thread is created.
 
@@ -916,8 +916,6 @@ sleep() is a static Thread method, doesn't release locks, doesn't need synchroni
 
 **Deadlock:**
 
-A deadlock happens when two or more processes (or people) are waiting for each other, so nobody can continue.
-
 A Deadlock occurs when two or more threads wait forever for resources held by each other.
 
 A deadlock happens when two or more threads are each waiting for a lock the other one holds, so none of them can ever proceed — they're stuck forever in a circular wait.
@@ -980,7 +978,7 @@ Both wait forever.
 
 Prevent Deadlock:
 
-1\. Lock Ordering
+**1. Lock Ordering**
 
 Always acquire locks in the same, fixed global order, regardless of which thread or direction the operation goes.
 
@@ -1044,7 +1042,7 @@ If two resources are frequently locked together, sometimes it's simpler to use o
 
 
 
-**synchronized** KeywordProvides mutual exclusion (only one thread executes the block at a time) AND visibility (changes made inside are guaranteed visible to other threads after they acquire the same lock).
+**synchronized** Keyword Provides mutual exclusion (only one thread executes the block at a time) AND visibility (changes made inside are guaranteed visible to other threads after they acquire the same lock).
 
 
 
@@ -1080,6 +1078,20 @@ Example				main() thread, worker  Garbage Collector thread, a heartbeat/logging 
 
 
 
+**What is ThreadLocal?**
+
+ThreadLocal<T> gives each thread its own independent copy of a variable. Even though multiple threads might reference the same ThreadLocal object, when they call get()/set(), they're each reading/writing to their own isolated value — no sharing, no race conditions, no synchronization needed.
+
+
+
+This is exactly how transaction IDs, logged-in user info, or correlation IDs are typically propagated through a web request in Spring-based systems — without passing them as a parameter through every single method call.
+
+private static final ThreadLocal<String> transactionId = new ThreadLocal<>();
+
+
+
+
+
 A **virtual thread** is a lightweight thread managed by the JVM itself, not the OS. Traditional threads (platform threads) map 1:1 to an OS thread — expensive to create, limited in number (thousands, maybe). Virtual threads let you spin up millions of them cheaply, because many virtual threads share a small pool of actual OS threads underneath.
 
 **Concurrent Collections**
@@ -1088,5 +1100,5 @@ ConcurrentHashMap
 
 Used segment-based locking — the map was divided into 16 segments by default, each with its own lock. Two threads could write simultaneously as long as they hit different segments. Still a form of lock striping, but coarse-grained.
 
-CopyOnWriteArrayList / CopyOnWriteArraySetHow it works: every write operation (add, remove, set) creates a brand new copy of the entire underlying array, and swaps the reference. Reads always operate on a stable, unchanging snapshot — no locking needed for reads at all.
+CopyOnWriteArrayList / CopyOnWriteArraySet How it works: every write operation (add, remove, set) creates a brand new copy of the entire underlying array, and swaps the reference. Reads always operate on a stable, unchanging snapshot — no locking needed for reads at all.
 
