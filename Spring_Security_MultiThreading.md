@@ -482,6 +482,30 @@ CORS handling
 
 
 
+1\. application.properties
+
+Uses key-value pairs.
+
+Advantages
+
+Simple and familiar.
+
+Easy for small projects.
+
+
+
+2\. application.yml
+
+Uses YAML (Yet Another Markup Language) with indentation to represent hierarchy.
+
+Advantages
+
+Cleaner and more readable.
+
+Better for complex and nested configurations.
+
+You can keep multiple profiles in a single file using document separators:
+
 
 
 **Multi-Threading:**
