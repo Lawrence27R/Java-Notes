@@ -206,7 +206,7 @@ BiFunction → Transforms using two inputs → Two inputs → One output.
 
 
 
-**We want to use an Employee object as a key in a HashMap. Which methods should we override and why?**	
+**We want to use an Employee object as a key in a HashMap. Which methods should we override and why?**
 
 A HashMap uses these methods internally:
 
@@ -267,6 +267,34 @@ Eager initialization for singleton beans by default
 Dependency Injection + Enterprise features
 
 Most commonly used in Spring Boot
+
+
+
+**@Transactional**
+
+Used for database transaction management.
+
+If exception occurs:
+
+Rollback transaction
+
+Spring creates proxy around method.
+
+@Transactional ensures that a group of database operations either all succeed or all fail together.
+
+Transaction Propagation Types
+
+| Type         | Meaning                   |
+
+| ------------ | ------------------------- |
+
+| REQUIRED     | Default                   |
+
+| REQUIRES\_NEW | New transaction           |
+
+| SUPPORTS     | Use existing if available |
+
+
 
 
 

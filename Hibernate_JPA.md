@@ -260,7 +260,7 @@ Batch Fetching
 
 
 
-**What is Cascade?**PERSIST
+What is Cascade?PERSIST
 
 Cascade defines what operations performed on a parent entity should automatically be applied to its child entities.
 
@@ -375,6 +375,4 @@ If you switched to another ORM, you had to rewrite your code.
 | Standard API                    | Hibernate-specific API |
 
 | Portable across implementations | Vendor-specific        |
-
-
 
