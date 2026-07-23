@@ -286,6 +286,8 @@ Another consumer in the same Consumer Group takes over its partitions.
 
 The new consumer resumes reading from the last committed offset.
 
+Think of it as the position (index) of a message in that partition.
+
 This process is called Consumer Rebalancing.
 
 
@@ -505,6 +507,154 @@ Cleaner and more readable.
 Better for complex and nested configurations.
 
 You can keep multiple profiles in a single file using document separators:
+
+
+
+Create Eureka Server
+
+Purpose:
+
+Maintains a registry of all microservices.
+
+Services register themselves automatically.
+
+Spring Cloud Netflix Eureka Server
+
+Create Microservice
+
+Create API Gateway - Client talks with api gateway
+
+configure in application.yml
+
+Single entry point
+
+Authentication
+
+Authorization
+
+OpenFeign - for microservice to microservice communication
+
+@EnableFeignClients
+
+
+
+**How Java connects to a Database:**
+
+The communication happens using JDBC (Java Database Connectivity).
+
+JDBC is an API provided by Java to communicate with databases.
+
+Connection con = DriverManager.getConnection(
+
+&#x20;   url,
+
+&#x20;   username,
+
+&#x20;   password
+
+);
+
+Load Driver -> Create Connection -> Create Statement -> Execute Query -> Read Result -> Close Connection
+
+Spring Boot
+
+&#x20;    |
+
+Repository (JPA/Hibernate)
+
+&#x20;    |
+
+Hibernate
+
+&#x20;    |
+
+JDBC
+
+&#x20;    |
+
+MySQL/Postgres Driver
+
+&#x20;    |
+
+MySQL Database
+
+
+
+Problem without Connection Pool
+
+Imagine 1000 users.
+
+Every request:
+
+Open DB connection
+
+Run SQL
+
+Close Connection
+
+It takes time because:
+
+Authentication
+
+Network handshake
+
+Memory allocation
+
+Socket creation
+
+
+
+**What is Connection Pool?**
+
+Instead of creating every time...
+
+Create some connections beforehand.
+
+Connection 1
+
+Connection 2
+
+Connection 3
+
+When request comes
+
+Take one connection
+
+
+
+↓
+
+
+
+Run SQL
+
+
+
+↓
+
+
+
+Return to pool
+
+Connection is reused.
+
+Pool Size ≈ Number of CPU cores × 2
+
+
+
+**What is HikariCP?**
+
+HikariCP is a high-performance JDBC connection pool.
+
+Spring Boot uses HikariCP as the default connection pool because it is:
+
+Very fast
+
+Lightweight
+
+spring.datasource.hikari.maximum-pool-size=20
+
+spring.datasource.hikari.minimum-idle=5
 
 
 
