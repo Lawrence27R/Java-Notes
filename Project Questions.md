@@ -286,6 +286,96 @@ Relationships
 
 
 
+**How Does Swift Works? (Society for Worldwide Interbank Financial Telecommunication)**
+
+SWIFT is a global financial messaging network used by banks and financial institutions to exchange secure, standardized payment instructions.
+
+SWIFT does not transfer money. It only transfers payment messages. The actual movement of funds happens through correspondent (nostro/vostro) accounts.
+
+SWIFT = Secure email carrying payment instructions.
+
+SWIFT Code / BIC
+
+Every bank has a unique identifier.
+
+
+
+**Real-Life Example:**
+
+John has an account in HDFC Bank (India).
+
+Alice has an account in Bank of America (USA).
+
+John wants to send $1000 to Alice.
+
+
+
+John
+
+&#x20;  │
+
+&#x20;  ▼
+
+HDFC Bank
+
+&#x20;  │
+
+&#x20;  │ SWIFT Message (MT103 / ISO 20022 equivalent)
+
+&#x20;  ▼
+
+SWIFT Network
+
+&#x20;  │
+
+&#x20;  ▼
+
+Correspondent Bank (if required)
+
+&#x20;  │
+
+&#x20;  ▼
+
+Bank of America
+
+&#x20;  │
+
+&#x20;  ▼
+
+Alice
+
+Money does not travel through SWIFT.
+
+The payment instruction/message travels through SWIFT.
+
+**Step 1:** Customer Initiates Payment
+
+Beneficiary Name
+
+Account Number
+
+SWIFT/BIC Code
+
+Bank Name
+
+Amount
+
+Currency
+
+**Step 2:** HDFC Creates a SWIFT Message
+
+This is converted into a standardized SWIFT message.
+
+The SWIFT network securely delivers the payment instruction to the receiving bank (or an intermediary bank if needed).
+
+**Step 4:** Correspondent Bank (if applicable)
+
+If HDFC and Bank of America don't have a direct relationship: (JP Morgan)
+
+**Step 5:** Receiver Gets the Money
+
+
+
 **Questions to asked:**
 
 **Is your advertising platform similar to Google AdSense**

@@ -10,7 +10,7 @@ class Animal { --parent
 
 &#x20;       System.out.println("This animal eats food.");
 
-&#x20;   }
+&#x20;   }  
 
 }
 
@@ -757,6 +757,24 @@ Does NOT allow null. value and key
 To avoid ambiguity in concurrent environments.
 
 Slightly slower because of synchronization mechanisms.
+
+
+
+A **Fail-Fast** iterator immediately throws a ConcurrentModificationException if the collection is modified while it is being iterated (except through the iterator's own remove() method).
+
+List<Integer> list = new ArrayList<>();
+
+
+
+A **Fail-Safe** iterator does not throw ConcurrentModificationException.
+
+Instead, it works on a copy (snapshot) of the collection.
+
+CopyOnWriteArrayList<Integer> list = new CopyOnWriteArrayList<>();
+
+CopyOnWriteArraySet
+
+ConcurrentHashMap
 
 
 
