@@ -376,3 +376,37 @@ If you switched to another ORM, you had to rewrite your code.
 
 | Portable across implementations | Vendor-specific        |
 
+
+
+Idempotent methods
+
+
+
+How do you secure APIs?
+
+What happens if two users update the same account?
+
+
+
+How do you avoid duplicate payment?
+
+
+
+How do you secure REST APIs?
+
+
+
+How do you improve slow APIs?
+
+
+
+How do you handle exceptions globally?
+
+
+
+How do you monitor microservices?
+
+
+
+What happens if one microservice goes down?
+

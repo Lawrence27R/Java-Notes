@@ -874,6 +874,46 @@ t.start() - create a new thread at the OS level
 
 t.run() - Runs like a normal method. No new thread is created.
 
+join() is a Thread instance method that makes one thread wait until another thread finishes.
+
+
+
+**Object:**
+
+Thread t = new Thread();
+
+t.start();
+
+t.join();
+
+t.interrupt();
+
+t.isAlive();
+
+wait()
+
+wait(long timeout)
+
+wait(long timeout, int nanos)
+
+notify()
+
+notifyAll()
+
+t.getName();
+
+t.setName("MyThread");
+
+
+
+**Not on Object:**
+
+Thread.sleep(1000);
+
+Thread.yield();
+
+Thread.currentThread();
+
 | Runnable                        | Callable                     |
 
 | ------------------------------- | ---------------------------- |
