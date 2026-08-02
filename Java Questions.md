@@ -10,7 +10,7 @@ class Animal { --parent
 
 &#x20;       System.out.println("This animal eats food.");
 
-&#x20;   }  
+&#x20;   }
 
 }
 
@@ -269,6 +269,134 @@ Dependency Injection + Enterprise features
 Most commonly used in Spring Boot
 
 
+
+
+
+**What is @Transactional?**
+
+@Transactional tells Spring that a method should execute inside a database transaction.
+
+A transaction follows the ACID properties:
+
+Atomicity – All operations succeed or all fail.
+
+Consistency – Database remains valid.
+
+Isolation – Concurrent transactions don't interfere.
+
+Durability – Once committed, data is permanently stored.
+
+**If anything fails rollback everything.**
+
+Spring does not modify your class directly.
+
+Instead it creates a Proxy.
+
+JDK Dynamic Proxy → Interface exists
+
+Method Called
+
+↓
+
+Begin Transaction
+
+↓
+
+Execute SQL
+
+↓
+
+Flush
+
+↓
+
+Commit
+
+↓
+
+Close Connection
+
+By default it doesn't rollback for Checked Exception
+
+Force Rollback @Transactional(rollbackFor = Exception.class)
+
+No Rollback for @Transactional(noRollbackFor = ArithmeticException.class)
+
+Even if exception occurs
+
+Transaction commits.
+
+
+
+**Propagation**
+
+**REQUIRED:**
+
+If transaction exists
+
+Reuse it.
+
+Else
+
+Create new.
+
+**REQUIRES\_NEW**
+
+Always create a new transaction.
+
+**NOT\_SUPPORTED**
+
+Suspend transaction.
+
+@Transactional(timeout = 5)
+
+Rollback if method exceeds 5 seconds.
+
+Not in a single transaction.
+
+A transaction is atomic. If all three operations are in the same transaction, they either all commit or all roll back.
+
+**If you want to commit/save that method you need to create a separate transaction of that method you cannot save it within the same transaction.**
+
+It uses Spring AOP proxies. The proxy starts a transaction before invoking the method, commits it if the method completes successfully, or rolls it back based on the rollback rules if an exception occurs.
+
+Doesn't work on private and static method:
+
+Because proxies intercept external method calls. Private methods cannot be overridden or intercepted by the proxy.
+
+No. Static methods are not invoked on the Spring-managed bean instance, so the proxy cannot intercept them.
+
+
+
+**AOP (Aspect-Oriented Programming)** is a programming paradigm used to separate cross-cutting concerns from your business logic. @Aspect
+
+Logging
+
+Security
+
+Transactions
+
+Exception Handling
+
+Instead of writing this code repeatedly, Spring applies it automatically.
+
+**What is a Proxy?**
+
+A Proxy is an object that sits between the client and the actual object.
+
+The proxy can:
+
+Check security
+
+Start transaction
+
+Log request
+
+Measure execution time
+
+Handle exceptions
+
+before calling the actual method.
 
 **@Transactional**
 
@@ -775,6 +903,22 @@ CopyOnWriteArrayList<Integer> list = new CopyOnWriteArrayList<>();
 CopyOnWriteArraySet
 
 ConcurrentHashMap
+
+
+
+**Can an ArrayList itself be immutable?**
+
+No. The ArrayList class is designed to be mutable. If you need immutability, use:
+
+List.of(...) (Java 9+)
+
+List.copyOf(...) (Java 10+)
+
+Immutable collections from libraries like Guava (ImmutableList)
+
+final prevents reassignment.
+
+List.of() prevents modification of the contents.
 
 
 
