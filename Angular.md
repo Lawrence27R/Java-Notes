@@ -8,7 +8,7 @@ No need for \*ngIf, \*ngFor, \*ngSwitch
 
 Before
 
-<div \*ngIf="isLoggedIn">
+<div \\\*ngIf="isLoggedIn">
 
 &#x20; Welcome
 
@@ -16,7 +16,7 @@ Before
 
 
 
-<div \*ngFor="let user of users">
+<div \\\*ngFor="let user of users">
 
 &#x20; {{user.name}}
 
@@ -86,7 +86,7 @@ No need to create modules for every component.
 
 **Features of Angular 20:**
 
-1\. Signals are Stable 
+1\. Signals are Stable
 
 Signals are Angular's modern reactive state management.
 
@@ -198,7 +198,7 @@ export class UserComponent {
 
 
 
-6\. Pipes 
+6\. Pipes
 
 Pipes transform data before displaying it.
 
@@ -257,6 +257,12 @@ CanActivate – Allow or block entering a route.
 CanDeactivate – Prevent leaving a route (e.g., unsaved form).
 
 
+
+To call API we need to configure provideHTTPClient provider
+
+Inject and Import HTTPClient Service 
+
+constructor(private http: HttpClient) { }
 
 1\. GET API
 
@@ -447,6 +453,4 @@ return this.http.post(
 &#x20; { headers }
 
 );
-
-
 

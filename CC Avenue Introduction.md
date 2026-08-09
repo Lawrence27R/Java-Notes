@@ -12,7 +12,7 @@ At Aurionpro, I work on Corporate and Transaction Banking platforms for clients 
 
 
 
-I have primarily worked on payment-related modules for STC Bank, including \*\*local payments, bill payments (SADAD integration), beneficiary management, WPS payroll processing, trade finance, and approval workflows\*\*. Through these modules, I have gained a strong understanding of payment processing lifecycles, bill payment workflows, maker-checker authorization, transaction validation, reconciliation concepts, and overall banking operations.
+I have primarily worked on payment-related modules for STC Bank, including local payments, bill payments (SADAD integration), beneficiary management, WPS payroll processing, trade finance, and approval workflows. Through these modules, I have gained a strong understanding of payment processing lifecycles, bill payment workflows, maker-checker authorization, transaction validation, reconciliation concepts, and overall banking operations.
 
 
 

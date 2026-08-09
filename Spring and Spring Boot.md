@@ -198,5 +198,3 @@ Proxy pattern
 
 | SUPPORTS     | Use existing if available |
 
-
-
