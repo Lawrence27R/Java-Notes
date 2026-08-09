@@ -1298,9 +1298,23 @@ ThreadLocal<T> gives each thread its own independent copy of a variable. Even th
 
 
 
+ThreadLocal — "everyone gets their own private copy"
+
+This is the opposite idea. Instead of one shared value that everyone sees, ThreadLocal gives each thread its own independent copy of a variable. Thread A and Thread B can both set/read the "same" ThreadLocal variable but never see each other's values — like everyone getting their own personal notebook instead of a shared whiteboard.
+
 This is exactly how transaction IDs, logged-in user info, or correlation IDs are typically propagated through a web request in Spring-based systems — without passing them as a parameter through every single method call.
 
 private static final ThreadLocal<String> transactionId = new ThreadLocal<>();
+
+
+
+**volatile** — "no private copies allowed"
+
+Normally, each CPU core can cache a variable's value locally for speed. So Thread A might update a variable, but Thread B (running on a different core) might still be looking at an old cached copy — it doesn't know the value changed.
+
+volatile says: "Every thread must always read this variable fresh from main memory, and every write must go straight back to main memory immediately." No local caching, no stale copies.
+
+volatile guarantees visibility (everyone sees the latest value), but NOT atomicity
 
 
 

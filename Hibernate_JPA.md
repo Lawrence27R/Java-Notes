@@ -378,6 +378,20 @@ If you switched to another ORM, you had to rewrite your code.
 
 
 
+save()	Inserts a new row, returns the generated ID. Doesn't check if the entity already exists.
+
+persist()	Also inserts a new row, but returns void. JPA-standard version of save(). Won't work outside a transaction.
+
+update()	Updates an existing row. Throws an exception if the entity is detached and doesn't already exist in the DB.
+
+merge()	Updates if the entity exists, or copies its state onto a managed entity. Safer than update() for detached objects — commonly used when data comes from outside the session (e.g. from a REST request).
+
+saveOrUpdate()	Decides automatically — inserts if the entity is new (no ID / transient), updates if it already exists. Convenient, but the "guessing" behavior can bite you in edge cases.
+
+delete()	Deletes the row.
+
+
+
 Idempotent methods
 
 
