@@ -1,6 +1,6 @@
 **Spring AI:**
 
-Spring AI is Spring's official framework for wiring LLMs (OpenAI, Anthropic, Azure OpenAI, Google Vertex, or local models via Ollama) into a Spring Boot application, acting as an abstraction layer that lets you plug in LLMs without hardcoding a specific AI provider. The pitch is the same one Spring has always made: instead of writing raw HTTP calls to an AI vendor's API, you get familiar Spring patterns — auto-configuration, dependency injection, starters — so you write ordinary Spring code and Spring AI handles the underlying API plumbing. 
+Spring AI is Spring's official framework for wiring LLMs (OpenAI, Anthropic, Azure OpenAI, Google Vertex, or local models via Ollama) into a Spring Boot application, acting as an abstraction layer that lets you plug in LLMs without hardcoding a specific AI provider. The pitch is the same one Spring has always made: instead of writing raw HTTP calls to an AI vendor's API, you get familiar Spring patterns — auto-configuration, dependency injection, starters — so you write ordinary Spring code and Spring AI handles the underlying API plumbing.
 
 Medium
 
@@ -12,11 +12,11 @@ How it works — the core pieces
 
 
 
-ChatModel — a portable interface. Your code talks to this interface, not to "OpenAI" or "Anthropic" directly. Swapping the underlying provider is mostly a configuration change — no rewritten business logic. 
+ChatModel — a portable interface. Your code talks to this interface, not to "OpenAI" or "Anthropic" directly. Swapping the underlying provider is mostly a configuration change — no rewritten business logic.
 
 Form.io
 
-ChatClient — the main API you actually call day to day. It's a fluent API for talking to chat models, deliberately similar in style to Spring's WebClient/RestClient — so it'll feel immediately familiar to you. 
+ChatClient — the main API you actually call day to day. It's a fluent API for talking to chat models, deliberately similar in style to Spring's WebClient/RestClient — so it'll feel immediately familiar to you.
 
 
 
@@ -42,7 +42,7 @@ ChatClient.prompt()
 
 &#x20;     ├── QuestionAnswerAdvisor → similarity search against VectorStore
 
-&#x20;     │       (VectorStore = embeddings of your FAQ docs, T\&Cs, 
+&#x20;     │       (VectorStore = embeddings of your FAQ docs, T\&Cs,
 
 &#x20;     │        transaction-timing policies, etc.)
 
@@ -443,8 +443,4 @@ Linux:
 | `docker compose down` | Stops and removes Compose services    |
 
 | `docker compose logs` | Shows Compose service logs            |
-
-
-
-
 

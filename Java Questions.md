@@ -132,6 +132,28 @@ Yes.
 
 
 
+**REST API:**
+
+GET     → "Give me something"
+
+POST    → "Here is something / perform this action"
+
+PUT     → "Replace this resource with this version"
+
+PATCH   → "Change part of this resource"
+
+DELETE  → "Remove this resource"
+
+
+
+Because sometimes we need to send a lot of information to tell the server what data we want. Complex Search
+
+Get Expose the complex query search in the url
+
+POST is used for updating when the API is designed that way. It's not because PUT cannot update data.
+
+
+
 java.util.function
 
 filter() → Predicate
