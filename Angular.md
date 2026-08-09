@@ -8,7 +8,7 @@ No need for \*ngIf, \*ngFor, \*ngSwitch
 
 Before
 
-<div \\\\\\\*ngIf="isLoggedIn">
+<div \*ngIf="isLoggedIn">
 
 &#x20; Welcome
 
@@ -16,7 +16,7 @@ Before
 
 
 
-<div \\\\\\\*ngFor="let user of users">
+<div \*ngFor="let user of users">
 
 &#x20; {{user.name}}
 
